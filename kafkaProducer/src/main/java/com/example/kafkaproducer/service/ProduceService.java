@@ -16,3 +16,4 @@ public class ProduceService {
         kafkaTemplate.send(myTopic, msg);
     }
 }
+ 
