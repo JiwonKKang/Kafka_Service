@@ -48,6 +48,7 @@ public class KafkaConfig {
         myConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
         return new DefaultKafkaProducerFactory<>(myConfig);
+
     }
 //
 //    @Bean
