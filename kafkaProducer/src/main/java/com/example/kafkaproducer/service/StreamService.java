@@ -23,18 +23,23 @@ public class StreamService {
 
     @Autowired
     public void buildPipeline(StreamsBuilder sb) {
-        KStream<String, String> leftStream = sb.stream("leftTopic", Consumed.with(STRING_SERDE, STRING_SERDE));
-        KStream<String, String> rightStream = sb.stream("rightTopic", Consumed.with(STRING_SERDE, STRING_SERDE));
+        KStream<String, String> leftStream = sb.stream("leftTopic",
+                Consumed.with(STRING_SERDE, STRING_SERDE))
+                .selectKey((k,v) -> v.substring(0, v.indexOf(":")));
+        KStream<String, String> rightStream = sb.stream("rightTopic",
+                Consumed.with(STRING_SERDE, STRING_SERDE))
+                .selectKey((k,v) -> v.substring(0, v.indexOf(":")));
         //일단 consume을 한뒤에 받은 데이터를 프로세싱하여 다른토픽에 Publish
         leftStream.print(Printed.toSysOut());
         rightStream.print(Printed.toSysOut());
 
         KStream<String, String> joinedStream = leftStream.join(
                 rightStream,
-                (leftValue, rightValue) -> leftValue + ":" + rightValue,
+                (leftValue, rightValue) -> leftValue + "_" + rightValue,
                 JoinWindows.ofTimeDifferenceWithNoGrace(Duration.ofMinutes(1)));
 
         joinedStream.print(Printed.toSysOut());
+        joinedStream.to("joinedMsg");
     }
 
 }
