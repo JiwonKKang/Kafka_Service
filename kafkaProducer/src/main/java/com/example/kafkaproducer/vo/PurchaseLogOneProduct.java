@@ -1,21 +1,22 @@
 package com.example.kafkaproducer.vo;
 
+
+import lombok.Builder;
 import lombok.Data;
 
-import java.util.ArrayList;
 
 @Data
-public class PurchaseLog {
+@Builder
+public class PurchaseLogOneProduct {
 
     private String orderId;
 
     private String userId; // ui d-0001
 
-    private ArrayList<String> productId = new ArrayList<>(); // {pg-0001, pg-0002}
+    private String productId; // {pg-0001, pg-0002}
 
     private String purchaseDt; //202302010700
 
     private Long price; // 24000
-
 
 }

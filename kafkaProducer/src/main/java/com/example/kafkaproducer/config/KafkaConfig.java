@@ -1,5 +1,6 @@
 package com.example.kafkaproducer.config;
 
+import com.example.kafkaproducer.util.CustomSerializer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -45,7 +46,7 @@ public class KafkaConfig {
         Map<String, Object> myConfig = new HashMap<>();
         myConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19094, localhost:29094, localhost:39094");
         myConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        myConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        myConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, CustomSerializer.class);
 
         return new DefaultKafkaProducerFactory<>(myConfig);
 

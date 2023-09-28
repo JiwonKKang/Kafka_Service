@@ -15,5 +15,9 @@ public class ProduceService {
     public void publish(String msg) {
         kafkaTemplate.send(myTopic, msg);
     }
+
+    public void sendJoinedMsg(String topicName, Object msg) {
+        kafkaTemplate.send(topicName, msg);
+    }
 }
  
