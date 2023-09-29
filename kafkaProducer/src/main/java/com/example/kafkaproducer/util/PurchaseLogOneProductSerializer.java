@@ -2,19 +2,17 @@ package com.example.kafkaproducer.util;
 
 
 import com.example.kafkaproducer.vo.PurchaseLogOneProduct;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.kafka.common.serialization.Serializer;
 
 import java.util.Map;
 
-public class CustomSerializer implements Serializer<PurchaseLogOneProduct> {
+public class PurchaseLogOneProductSerializer implements Serializer<PurchaseLogOneProduct> {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void configure(Map<String, ?> configs, boolean isKey) {
-        Serializer.super.configure(configs, isKey);
     }
 
     @Override
@@ -33,6 +31,5 @@ public class CustomSerializer implements Serializer<PurchaseLogOneProduct> {
 
     @Override
     public void close() {
-        Serializer.super.close();
     }
 }

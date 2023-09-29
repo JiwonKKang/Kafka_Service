@@ -1,11 +1,15 @@
 package com.example.kafkaproducer.vo;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class PurchaseLogOneProduct {
 
@@ -17,6 +21,6 @@ public class PurchaseLogOneProduct {
 
     private String purchaseDt; //202302010700
 
-    private Long price; // 24000
+    private String price; // 24000
 
 }

@@ -11,9 +11,4 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProducerController {
 
     private final ProduceService produceService;
-
-    @PostMapping("/massage")
-    public void pubMsg(@RequestParam String msg) {
-        produceService.publish(msg);
-    }
 }

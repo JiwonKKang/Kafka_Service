@@ -1,6 +1,8 @@
 package com.example.kafkaproducer.config;
 
-import com.example.kafkaproducer.util.CustomSerializer;
+import com.example.kafkaproducer.util.PurchaseLogOneProductSerializer;
+import com.example.kafkaproducer.util.PurchaseLogSerializer;
+import com.example.kafkaproducer.util.WatchingAdLogSerializer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.Serdes;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -37,7 +39,7 @@ public class KafkaConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, Object> kafkaTemplate() {
+    public KafkaTemplate<String, Object> KafkaTemplateForGeneral() {
         return new KafkaTemplate<String, Object>(producerFactory());
     }
 
@@ -46,10 +48,39 @@ public class KafkaConfig {
         Map<String, Object> myConfig = new HashMap<>();
         myConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19094, localhost:29094, localhost:39094");
         myConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        myConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, CustomSerializer.class);
+        myConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, PurchaseLogOneProductSerializer.class);
 
         return new DefaultKafkaProducerFactory<>(myConfig);
+    }
 
+    @Bean
+    public KafkaTemplate<String, Object> KafkaTemplateForWatchingAdLog() {
+        return new KafkaTemplate<String, Object>(ProducerFactoryForWatchingAdLog());
+    }
+    @Bean
+    public ProducerFactory<String, Object> ProducerFactoryForWatchingAdLog() {
+        Map<String, Object> myConfig = new HashMap<>();
+
+        myConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19094, localhost:29094, localhost:39094");
+        myConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        myConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, WatchingAdLogSerializer.class);
+
+        return new DefaultKafkaProducerFactory<>(myConfig);
+    }
+
+    @Bean
+    public KafkaTemplate<String, Object> KafkaTemplateForPurchaseLog() {
+        return new KafkaTemplate<String, Object>(ProducerFactoryForPurchaseLog());
+    }
+    @Bean
+    public ProducerFactory<String, Object> ProducerFactoryForPurchaseLog() {
+        Map<String, Object> myConfig = new HashMap<>();
+
+        myConfig.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:19094, localhost:29094, localhost:39094");
+        myConfig.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        myConfig.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, PurchaseLogSerializer.class);
+
+        return new DefaultKafkaProducerFactory<>(myConfig);
     }
 //
 //    @Bean
